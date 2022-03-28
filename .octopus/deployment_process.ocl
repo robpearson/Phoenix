@@ -58,7 +58,7 @@ step "Update static assets" {
             Octopus.Action.Aws.AssumeRole = "False"
             Octopus.Action.Aws.Region = "#{aws.region}"
             Octopus.Action.Aws.S3.BucketName = "#{aws.bucket}"
-            Octopus.Action.Aws.S3.PackageOptions = "{\"bucketKey\":\"\",\"bucketKeyBehaviour\":\"Filename\",\"bucketKeyPrefix\":\"my/bucket/key\",\"storageClass\":\"STANDARD\",\"cannedAcl\":\"private\",\"metadata\":[],\"tags\":[]}"
+            Octopus.Action.Aws.S3.PackageOptions = "{\"bucketKey\":\"\",\"bucketKeyBehaviour\":\"Filename\",\"bucketKeyPrefix\":\"my/bucket/key\",\"storageClass\":\"STANDARD\",\"cannedAcl\":\"private\",\"metadata\":[],\"tags\":[],\"variableSubstitutionPatterns\":\"**\\\\app.config\"}"
             Octopus.Action.Aws.S3.TargetMode = "EntirePackage"
             Octopus.Action.AwsAccount.UseInstanceRole = "False"
             Octopus.Action.AwsAccount.Variable = "aws.account"

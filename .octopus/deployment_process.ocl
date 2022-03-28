@@ -22,7 +22,15 @@ step "Update database" {
             Octopus.Action.AwsAccount.UseInstanceRole = "False"
             Octopus.Action.AwsAccount.Variable = "aws.account"
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "echo \"Updating database ...\""
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                echo "Updating database ..."
+                
+                # Connect to database
+                
+                # Execute sql script
+                
+                # Validate changes
+            EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
             OctopusUseBundledTooling = "False"

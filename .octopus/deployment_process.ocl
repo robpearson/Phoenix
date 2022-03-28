@@ -72,34 +72,6 @@ step "Update static assets" {
     }
 }
 
-step "Deploy webapp" {
-    properties = {
-        Octopus.Action.TargetRoles = "web"
-    }
-
-    action {
-        action_type = "Octopus.TentaclePackage"
-        properties = {
-            Octopus.Action.EnabledFeatures = ",Octopus.Features.ConfigurationTransforms,Octopus.Features.ConfigurationVariables"
-            Octopus.Action.Package.AutomaticallyRunConfigurationTransformationFiles = "False"
-            Octopus.Action.Package.AutomaticallyUpdateAppSettingsAndConnectionStrings = "True"
-            Octopus.Action.Package.DownloadOnTentacle = "False"
-            Octopus.Action.Package.FeedId = "Octopus Server (built-in)"
-            Octopus.Action.Package.PackageId = "Phoenix.web"
-        }
-        worker_pool_variable = ""
-
-        packages {
-            acquisition_location = "Server"
-            feed = "Octopus Server (built-in)"
-            package_id = "Phoenix.web"
-            properties = {
-                SelectionMode = "immediate"
-            }
-        }
-    }
-}
-
 step "Deploy webapp to ECS" {
     package_requirement = "AfterPackageAcquisition"
     properties = {

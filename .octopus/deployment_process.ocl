@@ -1,4 +1,4 @@
-step "Production Approval" {
+step "Approve (Production only)" {
 
     action {
         action_type = "Octopus.Manual"

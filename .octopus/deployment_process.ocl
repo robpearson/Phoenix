@@ -16,7 +16,6 @@ step "Update database" {
 
     action {
         action_type = "Octopus.AwsRunScript"
-        is_disabled = true
         properties = {
             Octopus.Action.Aws.AssumeRole = "False"
             Octopus.Action.Aws.Region = "aws.region"
@@ -55,7 +54,6 @@ step "Update static assets" {
 
     action {
         action_type = "Octopus.AwsUploadS3"
-        is_disabled = true
         properties = {
             Octopus.Action.Aws.AssumeRole = "False"
             Octopus.Action.Aws.Region = "#{aws.region}"
@@ -89,7 +87,6 @@ step "Deploy webapp" {
 
     action {
         action_type = "Octopus.TentaclePackage"
-        is_disabled = true
         properties = {
             Octopus.Action.EnabledFeatures = ",Octopus.Features.ConfigurationTransforms,Octopus.Features.ConfigurationVariables"
             Octopus.Action.Package.AutomaticallyRunConfigurationTransformationFiles = "False"
@@ -108,19 +105,5 @@ step "Deploy webapp" {
                 SelectionMode = "immediate"
             }
         }
-    }
-}
-
-step "Run a Script" {
-
-    action {
-        action_type = "Octopus.Script"
-        properties = {
-            Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "echo \"Hello world!\""
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Script.Syntax = "Bash"
-        }
-        worker_pool = "Hosted Ubuntu"
     }
 }

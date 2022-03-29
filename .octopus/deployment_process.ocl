@@ -12,10 +12,11 @@ step "Approve (Production only)" {
     }
 }
 
-step "Update database" {
+step "xUpdate database" {
 
     action {
         action_type = "Octopus.AwsRunScript"
+        is_disabled = true
         properties = {
             Octopus.Action.Aws.AssumeRole = "False"
             Octopus.Action.Aws.Region = "aws.region"
@@ -50,10 +51,11 @@ step "Update database" {
     }
 }
 
-step "Update static assets" {
+step "xUpdate static assets" {
 
     action {
         action_type = "Octopus.AwsUploadS3"
+        is_disabled = true
         properties = {
             Octopus.Action.Aws.AssumeRole = "False"
             Octopus.Action.Aws.Region = "#{aws.region}"
@@ -80,7 +82,7 @@ step "Update static assets" {
     }
 }
 
-step "Deploy webapp to Amazon ECS" {
+step "xDeploy webapp to Amazon ECS" {
     package_requirement = "AfterPackageAcquisition"
     properties = {
         Octopus.Action.TargetRoles = "ecs"
@@ -88,6 +90,7 @@ step "Deploy webapp to Amazon ECS" {
 
     action {
         action_type = "aws-ecs"
+        is_disabled = true
         step_package_version = "1.1.3"
         worker_pool_variable = ""
 
@@ -179,5 +182,47 @@ step "Deploy webapp to Amazon ECS" {
                 type = "waitWithTimeout"
             }
         }
+    }
+}
+
+step "Update database" {
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = "echo \"Updating database ...\""
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+        }
+        worker_pool = "Hosted Ubuntu"
+    }
+}
+
+step "Update static assets" {
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = "echo \"Update static assets\""
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+        }
+        worker_pool = "Hosted Ubuntu"
+    }
+}
+
+step "Deploy webapp to Amazon ECS" {
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = "echo \"Deploying container to Amazon ECS ...\""
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+        }
+        worker_pool = "Hosted Ubuntu"
     }
 }

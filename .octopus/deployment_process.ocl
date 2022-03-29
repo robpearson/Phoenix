@@ -80,7 +80,7 @@ step "Update static assets" {
     }
 }
 
-step "Deploy webapp to Amazon ECS" {
+step "Deploy webapp to Amzon ECS" {
     package_requirement = "AfterPackageAcquisition"
     properties = {
         Octopus.Action.TargetRoles = "ecs"

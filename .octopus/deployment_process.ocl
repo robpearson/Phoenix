@@ -54,6 +54,7 @@ step "Update static assets" {
 
     action {
         action_type = "Octopus.AwsUploadS3"
+        is_disabled = true
         properties = {
             Octopus.Action.Aws.AssumeRole = "False"
             Octopus.Action.Aws.Region = "#{aws.region}"
@@ -87,6 +88,7 @@ step "Deploy webapp" {
 
     action {
         action_type = "Octopus.TentaclePackage"
+        is_disabled = true
         properties = {
             Octopus.Action.EnabledFeatures = ",Octopus.Features.ConfigurationTransforms,Octopus.Features.ConfigurationVariables"
             Octopus.Action.Package.AutomaticallyRunConfigurationTransformationFiles = "False"
